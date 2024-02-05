@@ -4,17 +4,24 @@ public abstract class Game {
     private PlayerList PlayerList;
     private CardFactory CardFactory;
     private BasicDeck deck;
+    private Dealing Dealing;
     private int Cards;
     final Object lock = new Object();
-    abstract void Initialize();
     abstract boolean isGameOver();
-    abstract void DealCards();
-    public void Setup(){
-        this.setCardFactory(new CardFactory());
-        this.setPlayerList(new PlayerList());
-        this.setDeck(new BasicDeck());
-        this.getDeck().setDeckActions(new BasicDeckActions());
+    abstract void Initialize();
+
+    public Dealing getDealing() {
+        return Dealing;
     }
+
+    public void setDealing(Dealing dealing) {
+        Dealing = dealing;
+    }
+
+    public Object getLock() {
+        return lock;
+    }
+
     public int getPlayers() {
         return players;
     }

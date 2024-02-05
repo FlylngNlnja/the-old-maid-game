@@ -32,7 +32,7 @@ public class Player implements Runnable{
     }
 
     public boolean isMyTurn(){
-        return PlayerList.get_head() == this.plrNum;
+        return PlayerList.getHead() == this.plrNum;
     }
     public ArrayList<Card> getCard_List() {
         return Card_List;
@@ -48,12 +48,12 @@ public class Player implements Runnable{
                     while (!isMyTurn()) {
                         lock.wait();
                     }
-                    if (GameOver || PlayerList.returnPrev() == this) {
+                    if (GameOver || PlayerList.getActions().returnPrev(this.PlayerList) == this) {
                         return;
                     }
                     System.out.println("NEW TURN");
                     PlayTurn();
-                    PlayerList.increment();
+                    PlayerList.getActions().increment(this.PlayerList);
                     lock.notifyAll();
                     if (this.Card_List.isEmpty()) {
                         return;
@@ -65,13 +65,11 @@ public class Player implements Runnable{
         }
     }
 
-    public void PlayTurn(){
-        Player prevPlayer = PlayerList.returnPrev();
-        if (!prevPlayer.getCard_List().isEmpty()) {
-            Card cardToTake = prevPlayer.getCard_List().remove(new Random().nextInt(prevPlayer.getCard_List().size()));
-            this.AddCard(cardToTake);
-            System.out.println("Player " + this.plrNum + " took a card from " + prevPlayer.plrNum + ": " + cardToTake);
-        }
+    void PlayTurn(){
+        Player prevPlayer = PlayerList.getActions().returnPrev(this.PlayerList);
+        Card cardToTake = prevPlayer.getCard_List().remove(new Random().nextInt(prevPlayer.getCard_List().size()));
+        this.AddCard(cardToTake);
+        System.out.println("Player " + this.plrNum + " took a card from " + prevPlayer.plrNum + ": " + cardToTake);
         ArrayList<Card> matchingPairs = findMatchingPairs();
         System.out.println("Player " + this.plrNum + " discarded pairs: " + matchingPairs);
 
@@ -79,7 +77,7 @@ public class Player implements Runnable{
 
 
 
-    private ArrayList<Card> findMatchingPairs() {
+    ArrayList<Card> findMatchingPairs() {
         ArrayList<Card> matchingPairs = new ArrayList<>();
         for(Player temp_plr : PlayerList.getPlayer_List()){
             System.out.println(temp_plr.Card_List.size());
@@ -95,7 +93,7 @@ public class Player implements Runnable{
         }
         HashMap<String, Integer> filteredMapping = Mapping.entrySet().stream()
                 .filter(entry -> entry.getValue() % 2 == 0)
-                .collect(Collectors.toMap(HashMap.Entry::getKey, HashMap.Entry::getValue, (e1, e2) -> e1, HashMap::new));
+                .collect(Collectors.toMap(HashMap.Entry::getKey, HashMap.Entry::getValue, (v1, v2) -> v1, HashMap::new));
         for (Card card1 : this.Card_List) {
             str.delete(0, str.length());
             str.append(card1.get_color());

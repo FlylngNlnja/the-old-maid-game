@@ -3,6 +3,9 @@ import java.util.ArrayList;
 public class BasicDeck {
     private ArrayList<Card> deck;
     private DeckActions deckActions;
+    public BasicDeck(DeckActions deckActions){
+        this.deckActions = deckActions;
+    }
     public DeckActions getDeckActions() {
         return deckActions;
     }
