@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class PlayerList {
-    ArrayList<Player> Player_List = new ArrayList<>();
+    private ArrayList<Player> Player_List = new ArrayList<>();
     private int head = -1;
     public void setPlayer_List(ArrayList<Player> player_List) {
         Player_List = player_List;
@@ -11,6 +11,9 @@ public class PlayerList {
         return head;
     }
 
+    public ArrayList<Player> getList(){
+        return this.Player_List;
+    }
 
     public void setHead(int head) {
         this.head = head;

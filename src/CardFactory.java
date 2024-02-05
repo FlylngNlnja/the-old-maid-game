@@ -12,6 +12,6 @@ public class CardFactory {
         return new Card(SymbolMapper.get(symbol),symbol,value);
     }
     public Card createCard(String symbol){
-        return new Card("green",symbol,14);
+        return new Card(symbol);
     }
 }

@@ -1,8 +1,8 @@
 import java.lang.*;
 public class Card {
-    int value;
-    String color;
-    String symbol_name;
+    private int value;
+    private String color;
+    private String symbol_name;
 
     public Card(String color,String symbol_name,int value){
         this.color = color;
@@ -14,11 +14,11 @@ public class Card {
         this.symbol_name = symbol_name;
         this.value = 14;
     }
-    public void setcolor(String symbol) {
+    public void set_color(String symbol) {
         this.color = symbol;
     }
 
-    public void setsymbol_name(String symbol) {
+    public void set_symbol_name(String symbol) {
         this.symbol_name = symbol_name;
     }
 
@@ -29,10 +29,10 @@ public class Card {
     public int getValue() {
         return value;
     }
-    public String getsymbol_name() {
+    public String get_symbol_name() {
         return symbol_name;
     }
-    public String getcolor() {
+    public String get_color() {
         return color;
     }
 
@@ -42,6 +42,10 @@ public class Card {
                 "value=" + value +
                 ", color=" + color +
                 ", symbol_name='" + symbol_name;
+    }
+    public boolean compareTo(Card card)
+    {
+        return this.color.equals(card.get_color()) && this.value == card.getValue();
     }
 }
 

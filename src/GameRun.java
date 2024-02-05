@@ -30,9 +30,10 @@ public class GameRun extends Game{
                     lock.wait();
                 }
                 System.out.println("Player " + Objects.requireNonNull(return_Loser()).getPlrNum() + " Lost the game.");
-                for(Player plr : getPlayerList().Player_List){
+                for(Player plr : getPlayerList().getList()){
                     plr.GameOver();
                 }
+                exit(0);
 
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
