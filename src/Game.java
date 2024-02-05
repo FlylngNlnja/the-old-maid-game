@@ -1,15 +1,20 @@
 import java.util.*;
 public abstract class Game {
     private int players;
-    private PlayerList PlayerList = new PlayerList();
-    private CardFactory CardFactory = new CardFactory();
-    ArrayList<Card> deck = new ArrayList<>();
+    private PlayerList PlayerList;
+    private CardFactory CardFactory;
+    private BasicDeck deck;
     private int Cards;
     final Object lock = new Object();
-    abstract void Play();
+    abstract void Initialize();
     abstract boolean isGameOver();
-    abstract void CreateDeck();
     abstract void DealCards();
+    public void Setup(){
+        this.setCardFactory(new CardFactory());
+        this.setPlayerList(new PlayerList());
+        this.setDeck(new BasicDeck());
+        this.getDeck().setDeckActions(new BasicDeckActions());
+    }
     public int getPlayers() {
         return players;
     }
@@ -18,10 +23,10 @@ public abstract class Game {
         this.players = players;
     }
 
-    public ArrayList<Card> getDeck() {
+    public BasicDeck getDeck() {
         return deck;
     }
-    public void setDeck(ArrayList<Card> deck) {
+    public void setDeck(BasicDeck deck) {
         this.deck = deck;
     }
     public CardFactory getCardFactory() {

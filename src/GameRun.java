@@ -7,7 +7,8 @@ import static java.lang.System.exit;
 
 public class GameRun extends Game{
     @Override
-    public void Play(){
+    public void Initialize(){
+        this.Setup();
         Scanner scanner = new Scanner(System.in);
         while(true) {
             if(scanner.hasNextInt()) {
@@ -18,7 +19,7 @@ public class GameRun extends Game{
         for (int i = 0;i<this.getPlayers();i++){
             this.getPlayerList().AddPlayer(i,lock);
         }
-        CreateDeck();
+        this.getDeck().setDeck(this.getDeck().getDeckActions().CreateDeck(this.getCardFactory()));
         DealCards();
         for (Player player : this.getPlayerList().getPlayer_List()) {
             Thread plr = new Thread(player);
@@ -60,32 +61,14 @@ public class GameRun extends Game{
         }
         return null;
     }
-    @Override
-    protected void CreateDeck(){
-        CardFactory CF = this.getCardFactory();
-        ArrayList<Card> deck = this.getDeck();
-        for(int i = 1;i <= 13; i++){
-            deck.add(CF.createCard("Club",i));
-        }
-        for(int i = 1;i <= 13; i++){
-            deck.add(CF.createCard("Spade",i));
-        }
-        for(int i = 1;i <= 13; i++){
-            deck.add(CF.createCard("Heart",i));
-        }
-        for(int i = 1;i <= 13; i++){
-            deck.add(CF.createCard("Diamond",i));
-        }
-        deck.add(CF.createCard("Joker"));
-        Collections.shuffle(deck);
-    }
+
     @Override
     protected void DealCards(){
         PlayerList plrList = this.getPlayerList();
-        int siz = deck.size();
+        int siz = this.getDeck().getDeck().size();
         for(int i =0;i<siz;i++){
             plrList.simple_increment();
-            Card tCard = deck.removeFirst();
+            Card tCard = this.getDeck().getDeck().removeFirst();
             plrList.getCurrentPlayer().AddCard(tCard);
         }
         plrList.reset();
